@@ -25,3 +25,7 @@ rls*.log
 .cargo-remote.toml
 *.bin
 *.iml
+model_state_dict.pt
+.gitignore
+model.pt
+0_epoch.pt

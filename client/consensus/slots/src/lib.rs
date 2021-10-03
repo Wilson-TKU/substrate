@@ -49,6 +49,9 @@ use sp_runtime::{
 };
 use sp_timestamp::Timestamp;
 use std::{fmt::Debug, ops::Deref, time::Duration};
+use pyo3::{prelude::*, types::{PyModule}};
+use std::io::prelude::*;
+use std::fs::File;
 
 /// The changes that need to applied to the storage to create the state for a block.
 ///
@@ -370,6 +373,25 @@ pub trait SimpleSlotWorker<B: BlockT> {
 				return None
 			},
 		};
+
+		// ------------------------------------------
+		pyo3::prepare_freethreaded_python();
+		fn execute_python() -> PyResult<()> {
+			Python::with_gil(|py| {
+				let mut file = File::open("/home/wilson_yeh/substrate/substrate/train.py").expect("Unable to open the file");
+				let mut contents = String::new();
+				file.read_to_string(&mut contents).expect("Unable to read the file");
+				let activators = PyModule::from_code(py, &contents, "test.py", "test")?;
+		
+				// let test: f64 = activators.getattr("sum")?.call1((5, 6))?.extract()?;
+				// println!("{}", test);
+		
+				Ok(())
+			})
+		}
+
+		execute_python().map_err(|err| println!("{:?}", err)).ok();
+		// ------------------------------------------
 
 		info!(
 			target: logging_target,
