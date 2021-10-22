@@ -52,7 +52,8 @@ use std::{fmt::Debug, ops::Deref, time::Duration};
 use pyo3::{prelude::*, types::{PyModule}};
 use std::io::prelude::*;
 use std::fs::File;
-
+use std::io::Write;
+use std::fs::OpenOptions;
 /// The changes that need to applied to the storage to create the state for a block.
 ///
 /// See [`sp_state_machine::StorageChanges`] for more information.
@@ -375,6 +376,22 @@ pub trait SimpleSlotWorker<B: BlockT> {
 		};
 
 		// ------------------------------------------
+		// extern crate time;
+		// println!("{}", time::now());
+		use chrono::Utc;
+		let dt = Utc::now();
+		let timestamp: i64 = dt.timestamp();
+		let current_timestamp = format!("{}\n", dt.timestamp());
+		// println!("Current timestamp is {}", dt.timestamp());
+		
+		let path = "/home/wilson_yeh/substrate/substrate/time.log";
+		let mut f = OpenOptions::new()
+			.append(true)
+			.create(true) // Optionally create the file if it doesn't already exist
+			.open(path)
+			.expect("Unable to open file");
+    	f.write_all(current_timestamp .as_bytes()).expect("Unable to write data");
+
 		pyo3::prepare_freethreaded_python();
 		fn execute_python() -> PyResult<()> {
 			Python::with_gil(|py| {
