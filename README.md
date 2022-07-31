@@ -28,3 +28,24 @@ The security policy and procedures can be found in [`docs/SECURITY.md`](docs/SEC
 The reason for the split-licensing is to ensure that for the vast majority of teams using Substrate to create feature-chains, then all changes can be made entirely in Apache2-licensed code, allowing teams full freedom over what and how they release and giving licensing clarity to commercial teams.
 
 In the interests of the community, we require any deeper improvements made to Substrate's core logic (e.g. Substrate's internal consensus, crypto or database code) to be contributed back so everyone can benefit.
+
+---
+# Readme for my paper.
+## Build code Environment
+- Ubuntu 20.04
+- rustc 1.55.0
+- cargo 1.55.0
+- pyo3 0.14.5
+## Run bin file and collect data on hardware:
+- CPU: Intel(R) Core(TM) i5-4590 CPU @ 3.30GHz
+- Memory: 8G
+- GPU: Nvidia 750ti
+## How to use.
+- Run the main project.
+  ```
+  cargo run --release -- --dev --tmp
+  ```
+  
+- Monitor system data.
+  
+  Run the script [here](https://github.com/Wilson-TKU/data_parser/blob/master/data_collect/all_data_collect.sh)
